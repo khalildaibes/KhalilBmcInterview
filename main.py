@@ -1,98 +1,51 @@
-# Import libraries
-import os
-import threading
-import time
-from termcolor import colored
+# -*- coding: utf-8 -*-
 
-# Insert the directory path in here
-from threading import Thread
+import os  # importing os module to use os.listdir(path)
+import time  # importing time module
+import sys  # importing os module to use argv
 
-
-def add_element(dict, key, values):
-    if key not in dict:
-        dict[key] = []
-    dict[key].append(values)
+filenames = []
+start_time = time.time()
+lst = []
+ele = sys.argv[1]  # receiving the input form (Terminal)
+lst.append(ele)  # adding the element
 
 
-def print_dir_content(path, fileslst, folderslst, parent, spaces, parentspaces):
+def print_dir_content(path, parent, spaces, parentspaces):
     # Extracting all the contents in the directory corresponding to path
     l_files = os.listdir(path)
-    count = 0
-    filescount = 0
-    for file in l_files:
-        file_path = f'{path}\\{file}'
-        if os.path.isfile(file_path):
-            count += 1
+    # variables for customization of the printing process
+    file_spaces = (int(spaces)) * "─"
+    parents_pre_spaces = (int(parentspaces + spaces)) * " "
+    parents_spaces = (int(spaces)) * " "
+    # Iterating over all the files
 
-    # Iterating over all the files in the dir
     for file in l_files:
-        filescount += 1
-        filespaces = (int(spaces) ) * "─"
-        parentspacesstr = (int(parentspaces)) * " "
-        parentsprespaces=(int(spaces) ) * " "
+
         # Instantiating the path of the file
-        file_path = f'{path}\\{file}'
-        is_last = count == len(l_files)
-        # Checking whether the given file print it
+        file_path = '' + path + '/' + file  # initialization the file path name
+
+        # Checking whether the given file is a file or not
         if os.path.isfile(file_path):
+            print(
+                '|' + parents_pre_spaces + '|' + parents_spaces + '|' + file_spaces + '  └' + file_path)  # printing the file
+        # Checking whether the given file is a directory or not
+        elif os.path.isdir(file_path):
             try:
-                # Printing the file pertaining to file_path
-                if filescount == count:
-                    add_element(fileslst, f'|{parentspacesstr}|{parent}',
-                                [f'|{parentsprespaces} |{parentspacesstr}|{filespaces}└{file}', spaces, spaces + parentspaces])
-
-                else:
-                    add_element(fileslst, f'|{parentspacesstr}|{parent}',
-                                [f'|{parentsprespaces} |{parentspacesstr}|{filespaces}├{file}', spaces, spaces + parentspaces])
+                print(
+                    '|' + parents_pre_spaces + '|' + parents_spaces + parent + '\\' + file_path)  # printing the directory
+                print_dir_content(file_path, parent, spaces + 1, spaces + parentspaces + 1)
             except:
-                # Catching if any error occurs and alerting the user
-                print(f'ALERT: {file} could not be printed! Please check\
-                the associated softwares, or the file type.')
-
-    # Iterating over all the files in the dir
-    for file in l_files:
-
-        # Instantiating the path of the file
-        file_path = f'{path}\\{file}'
-        folderspaces = (int(spaces)) * ""
-        parentspacesstr = int(parentspaces) * ""
-        # Checking whether the given file is a directory
-        if not (os.path.isfile(file_path)):
-            folderslst.append(f'└{parentspacesstr}|{folderspaces}├{file}')
-            thread = Thread(target=print_dir_content,
-                            args=(
-                                file_path, fileslst, folderslst, file_path, int(spaces + 1),
-                                int(spaces + parentspaces)))
-            thread.start()
-            thread.join()
-
-
-lst = [r"HOST1|C:\Users\Admin\Desktop\zero-to-mastery\jstest", r"HOST2|C:\Users\Admin\Desktop\Android",
-       r"HOST3|C:\Users\Admin\Desktop\projectBeta3.0", r"HOST1|C:\Users\Admin\Desktop\DM_PROJECT_GROUP_12 (1)"]
-
-# n = int(input("Enter number of Hosts : "))
-# lst = []
-# # iterating till the range
-# for i in range(0, n):
-#     ele = str(input("Please neter in this fromat HostName|Requested root directory  "))
-#     lst.append(ele)  # adding the element
+                pass  # do nothing
 
 
 for el in lst:
-    folderslst = []
-    fileslst = {}
-    txt = str(el)
-    x = txt.split("|")
-    x[1].replace(r'\\', '/')
-    thread = Thread(target=print_dir_content, args=(x[1], fileslst, folderslst, x[1], 1, 0))
-    thread.daemon = True
-    thread.start()
-    thread.join()
-    print(colored(('=>the host name is **', x[0], '**   the requested dir is **', x[1], 'the trhraed id', thread.ident,
-                   '** <='), 'blue'))
 
-    for elm in fileslst:
-        spaces = fileslst.get(elm)[0][1] * " "
-        print(colored(f'└{spaces} {elm}', 'red'))
-        for filelst1 in fileslst.get(elm):
-            print(colored(f'{filelst1[0]}', 'green'))
+    fileslst = {}  # dictionary to hold the
+    txt = str(el)  # converting the argv to string
+    x = txt.split("|")  # splitting the input to 2
+    x[1].replace(r'\\', '/')
+    thstart_time = time.time()  # get the starting time
+    print_dir_content(x[1], x[0], 0, 1)  # calling the method
+    print('\n ' + str(time.time() - thstart_time))  # printing elapsed time
+

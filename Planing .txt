@@ -40,3 +40,7 @@ strting with the planing:
         eabled the bridged netwrok option for ip poupse
         get the ip of the remote host
         create secure connection and apply a command wait for response and print it
+----------------------------------------------------------------------
+
+        changing the tree command programm to work on remote hosts
+        and deploy it to validate the run is prefect.
