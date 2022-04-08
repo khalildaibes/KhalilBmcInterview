@@ -1,0 +1,31 @@
+this is the progress of solving the task
+first i have read the task word file a couple of times
+
+
+strting with the planing:
+1- make a tree command alike code
+2-connect to remoter host
+3 find a way to run the code on the other machines.
+4-test the programm
+5-try to refactor the code
+6-return to 4 until its stable
+7-try with more than on machine
+8-repeate 4-6
+9-see more options and try to optimize
+10- apply ci/cd
+
+
+1**** make a tree command alike code
+    first a made a python code  on my local machine that behavis like the tree command
+    is was so simple using the os module and recursive calls
+-------------------------------------------------------
+       * take the input as "host|root directory,host|root directory"
+        find a way to split the argument to sipral "host|root directory"
+        for each argument from the input create a thread to run the tree function on the "root"
+        print the output for each Host as a continus output (async).
+
+       * create the tree function.
+
+       * check the output.
+---------------------------------------------------------------------
+
