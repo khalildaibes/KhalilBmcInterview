@@ -28,4 +28,15 @@ strting with the planing:
 
        * check the output.
 ---------------------------------------------------------------------
+    ** using the paramiko module we can establish a SSH connection to the remote host
+        i used a dummy command to try out the connecting status
 
+        first i created a VM on ubunto in mu local enviroment
+        enable openssh on my machine
+        enable ssh on the remote hsot
+        --install paclages like paramiko to create the ssh connection
+        read about the rsa progress and how to connect and verify the connection
+
+        eabled the bridged netwrok option for ip poupse
+        get the ip of the remote host
+        create secure connection and apply a command wait for response and print it
